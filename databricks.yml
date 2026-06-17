@@ -1,0 +1,78 @@
+# This is a Databricks asset bundle definition for dab_project.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: dab_project
+  uuid: 13df3948-d579-43ff-baf1-48fdac67036f
+
+include:
+  - resources/jobs/*.yml
+  - resources/*.yml
+  
+  # Demo jobs used for tests/learning purposes
+  - demos/resources/jobs/*.yml
+
+# Variable declarations.
+# Variables cannot be accessed directly in scripts or notebooks.
+# They need to be passed as parameters from the job definition, and accessed via dbutils.widgets.get in notebooks.
+variables:
+  catalog:
+    description: The catalog to use
+    default: citibike_dev
+  dev_flag:
+    description: Flag to indicate if the environment is development or production
+    default: true
+
+targets:
+  dev:
+    # The default target uses 'mode: development' to create a development copy.
+    # - Deployed resources get prefixed with '[dev my_user_name]'
+    # - Any job schedules and triggers are paused by default.
+    # See also https://docs.databricks.com/dev-tools/bundles/deployment-modes.html.
+    mode: development
+    presets:
+      tags:
+        env: dev
+        project: dab_project
+    default: true
+    workspace:
+      host: https://dbc-cdd467ab-cdba.cloud.databricks.com
+      root_path: /Workspace/Users/tomimas231@gmail.com/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      dev_flag:
+        default: true
+  
+  test:
+    mode: production
+    presets:
+      tags:
+        env: test
+        project: dab_project
+      # Define a prefix for all resources in this target.
+      name_prefix: '[test] '
+    workspace:
+      host: https://dbc-7fec11f6-2f19.cloud.databricks.com/
+      # We deploy to a shared folder in testing environment, so that other users can also access the deployed assets.
+      root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      catalog: 
+        default: citibike_test
+      dev_flag:
+        default: false
+    permissions:
+      - user_name: tomimas231@gmail.com
+        level: CAN_MANAGE
+  
+  prod:
+    mode: production
+    workspace:
+      host: https://dbc-af8eb77a-a3a0.cloud.databricks.com/
+      # We deploy to a shared folder in production, so that other users can also access the deployed assets.
+      root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      catalog: 
+        default: citibike_prod
+      dev_flag:
+        default: false
+    permissions:
+      - user_name: tomimas231@gmail.com
+        level: CAN_MANAGE

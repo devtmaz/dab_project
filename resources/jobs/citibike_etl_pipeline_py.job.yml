@@ -1,0 +1,59 @@
+resources:
+  jobs:
+    citibike_etl_pipeline_py:
+      name: citibike_etl_pipeline_py
+      tasks:
+        - task_key: 01_bronze_citibike
+          spark_python_task:
+            python_file: ../../citibike_etl/scripts/01_bronze/01_bronze_citibike.py
+            source: WORKSPACE
+            parameters:
+              # These parameters could be obtained by creating them in Jobs UI and copying from job YAML. 
+              - "{{job.id}}"
+              - "{{job.run_id}}"
+              - "{{task.run_id}}"
+              - "{{job.start_time.iso_datetime}}"
+              - "${var.catalog}"
+          environment_key: Default
+        - task_key: 02_silver_citibike
+          depends_on:
+            - task_key: 01_bronze_citibike
+          spark_python_task:
+            python_file: ../../citibike_etl/scripts/02_silver/02_silver_citibike.py
+            source: WORKSPACE
+            parameters:
+              - "{{job.id}}"
+              - "{{job.run_id}}"
+              - "{{task.run_id}}"
+              - "{{job.start_time.iso_datetime}}"
+              - "${var.catalog}"
+          environment_key: Default
+        - task_key: 03_gold_citibike_daily_ride_summary
+          depends_on:
+            - task_key: 02_silver_citibike
+          spark_python_task:
+            python_file: ../../citibike_etl/scripts/03_gold/03_gold_citibike_daily_ride_summary.py
+            source: WORKSPACE
+            parameters:
+              - "${var.catalog}"
+          environment_key: Default
+        - task_key: 03_gold_citibike_daily_station_performance
+          depends_on:
+            - task_key: 02_silver_citibike
+          spark_python_task:
+            python_file: ../../citibike_etl/scripts/03_gold/03_gold_citibike_daily_station_performance.py
+            source: WORKSPACE
+            parameters:
+              - "${var.catalog}"
+          environment_key: Default
+      queue:
+        enabled: true
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "5"
+            # Install the wheel from the dist folder. Python or notebooks that run in this environment
+            # could import the modules and packages from the wheel natively.
+            dependencies:
+              - "../../dist/*.whl"
+      performance_target: PERFORMANCE_OPTIMIZED

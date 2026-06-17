@@ -1,0 +1,20 @@
+resources:
+  pipelines:
+    citibike_etl_pipeline:
+      name: citibike_etl_pipeline
+      configuration:
+        catalog: "${var.catalog}"
+      libraries:
+        - glob:
+            include: ../../citibike_etl/dlt/01_bronze/**
+        - glob:
+            include: ../../citibike_etl/dlt/02_silver/**
+        - glob:
+            include: ../../citibike_etl/dlt/03_gold/**
+      schema: default
+      continuous: false
+      development: "${var.dev_flag}"
+      photon: true
+      channel: CURRENT
+      catalog: "${var.catalog}"
+      serverless: true
