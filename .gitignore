@@ -3,6 +3,9 @@ build/
 dist/
 __pycache__/
 *.egg-info
+.coverage
+.vscode/
+.pytest_cache/
 
 # Virtual environment
 .venv/
