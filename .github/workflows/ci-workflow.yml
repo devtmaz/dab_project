@@ -1,4 +1,4 @@
-name: Unit Tests on Pull Request
+name: CI Workflow
 
 on:
   pull_request:
@@ -25,7 +25,6 @@ jobs:
 
       - name: Run unit tests with coverage
         run: |
-          pip install pytest pytest-cov
           pytest tests/ \
             --disable-warnings \
             --cov=src \
