@@ -12,6 +12,7 @@ __pycache__/
 .venv*/
 venv*/
 
+sandbox/
 scratch/**
 !scratch/README.md
 **/explorations/**
