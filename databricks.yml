@@ -59,8 +59,10 @@ targets:
       dev_flag:
         default: false
     permissions:
-      - user_name: tomimas231@gmail.com
+      - service_principal_name: '07ec1a3a-0f53-4401-a55f-c97f63ff1bf7'
         level: CAN_MANAGE
+    run_as:
+        service_principal_name: '07ec1a3a-0f53-4401-a55f-c97f63ff1bf7'
   
   prod:
     mode: production
@@ -74,5 +76,7 @@ targets:
       dev_flag:
         default: false
     permissions:
-      - user_name: tomimas231@gmail.com
+      - service_principal_name: '28ba791d-6d6e-4eb9-805d-bfc600316bd0'
         level: CAN_MANAGE
+    run_as:
+        service_principal_name: '28ba791d-6d6e-4eb9-805d-bfc600316bd0'
