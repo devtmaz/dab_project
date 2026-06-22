@@ -36,7 +36,7 @@ targets:
     default: true
     workspace:
       host: https://dbc-cdd467ab-cdba.cloud.databricks.com
-      root_path: /Workspace/Users/tomimas231@gmail.com/.bundle/${bundle.name}/${bundle.target}
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
     variables:
       dev_flag:
         default: true
