@@ -1,3 +1,10 @@
+"""
+Python packaging configuration for dab_project. This file defines how to build and
+distribute the project as a Python wheel package. When deploying a wheel with DAB,
+the command `python setup.py bdist_wheel` is executed by default to create a
+distributable .whl file that can be installed in other Python environments.
+"""
+
 from setuptools import setup, find_packages
 
 setup(
