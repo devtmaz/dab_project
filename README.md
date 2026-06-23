@@ -4,24 +4,52 @@ This is a repository created during Udemy course `CI/CD with Databricks Asset Bu
 
 Primary repository URL with Wiki owned by course instructor: https://github.com/pathfinder-analytics-uk/dab_project.
 
+## Table of Contents
+
+- [Project structure](#project-structure)
+- [Getting started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Setup Instructions](#setup-instructions)
+  - [Virtual Environment Setup](#virtual-environment-setup)
+  - [Java Setup for Local PySpark Development](#java-setup-for-local-pyspark-development)
+  - [Unit Tests with Pytest](#unit-tests-with-pytest)
+  - [Databricks CLI, Set-Up and Bundle Commands](#databricks-cli-set-up-and-bundle-commands)
+
 ## Project structure
 
-* `demos`: Demo scripts, yaml configurations which demonstrate core concepts and functionalities used to develop project.
-* `docs`: Folder with project documentation (diagrams, tables structure)
-* `src/`: Python source code with utilities used for this project.
-* `resources/`:  Resource configurations (jobs, pipelines, etc.)
-* `tests/`: Unit tests for the shared Python code.
-* `fixtures/`: Fixtures for data sets (primarily used for testing).
-* `notebooks`: Notebooks used to test project setup.
+```
+dab_project/
+├── demos/                    Demo scripts and YAML configurations demonstrating core concepts
+├── docs/                     Project documentation (diagrams, data models)
+├── src/                      Python source code and utilities
+├── resources/                Resource configurations (jobs, pipelines)
+├── tests/                    Unit tests for shared Python code
+├── fixtures/                 Test data sets
+├── notebooks/                Notebooks for testing project setup
+├── citibike_etl/             ETL workflows and scripts
+├── build/                    Built project artifacts
+├── databricks.yml            Databricks Asset Bundle configuration
+├── requirements-dbc.txt      Databricks Connect dependencies
+├── requirements-pyspark.txt  PySpark dependencies
+└── README.md                 Project documentation
+```
 
 
 ## Getting started
 
-Before you run or deploy this project, you'll have to follow along with the Udemy course to set up your environment (Databricks Workspaces, Service Principals, GitHub Repository etc.).
+### Prerequisites
 
-You will also need to update the `databricks.yml` configuration file with your Workspace URLs and Service Principal details.
+Before you proceed, ensure you have:
 
-You'll also want to set up local Python environments for Databricks Connect and local PySpark development. Follow the instructions for your platform below.
+- [ ] Completed the Udemy course setup (Databricks Workspaces, Service Principals, GitHub Repository)
+- [ ] Updated the `databricks.yml` configuration file with your Workspace URLs and Service Principal details
+- [ ] Python 3.11 installed on your system
+- [ ] Java Development Kit (JDK) 8, 11, or newer (required for local PySpark development)
+- [ ] Databricks CLI installed
+
+### Setup Instructions
+
+Follow the instructions for your platform below to set up local Python environments for Databricks Connect and local PySpark development.
 
 ### Virtual Environment Setup
 
@@ -78,7 +106,7 @@ You'll also want to set up local Python environments for Databricks Connect and 
 
 4. **Create and activate the local PySpark environment**
    ```powershell
-   python -m venv .venv_pyspark
+   py -3.11 -m venv .venv_pyspark
    .\.venv_pyspark\Scripts\Activate.ps1
    ```
 5. **Install PySpark dependencies**
@@ -92,9 +120,102 @@ You'll also want to set up local Python environments for Databricks Connect and 
    ```
 
 ---
-### Databricks CLI, Set-Up and Bundle Commands
 
-TODO: add instructions for Windows users.
+### Java Setup for Local PySpark Development
+
+This project uses `pyspark` as its data processing and transformation technology. To develop and test pyspark code on a local environment, you need to install Java Development Kit (JDK).
+
+#### macOS / Linux
+
+1. Download Java JDK 8, 11, or newer from [Oracle Java Download Website](https://www.oracle.com/java/technologies/downloads/). Recommended version is JDK 11.
+   ```bash
+   # Example: Download and install JDK 11
+   # On macOS with Homebrew:
+   brew install java11
+   ```
+
+2. Set the `JAVA_HOME` environment variable:
+   ```bash
+   # Find your Java installation path
+   /usr/libexec/java_home -v 11
+   
+   # Add to your shell profile (~/.zprofile, ~/.bash_profile, or ~/.bashrc)
+   export JAVA_HOME=$(/usr/libexec/java_home -v 11)
+   ```
+
+3. Verify Java installation:
+   ```bash
+   java --version
+   ```
+
+#### Windows
+
+1. Download Java JDK 8, 11, or newer from [Oracle Java Download Website](https://www.oracle.com/java/technologies/downloads/). Recommended version is JDK 11.
+2. Add new `JAVA_HOME` system environment variable with the path to the folder with Java installation:
+
+   **Windows**
+
+   | Variable | Value |
+   |----------|-------|
+   | `JAVA_HOME` | `C:\Program Files\Java\jdk-11.0.31` |
+   | `Path` (add entry) | `C:\Program Files\Java\jdk-11.0.31\bin` |
+
+
+3. Verify Java installation:
+   ```pwsh
+   java --version
+   ```
+   Output should look like this:
+   ```
+   java 11.0.31 2026-04-21 LTS
+   Java(TM) SE Runtime Environment 18.9 (build 11.0.31+9-LTS-165)
+   Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.31+9-LTS-165, mixed mode)
+   ```
+
+---
+
+### Unit Tests with Pytest
+
+This project uses the `Pytest` framework for unit tests.
+
+#### macOS / Linux
+
+1. Activate the virtual environment with installed `pyspark` and `pytest` packages:
+   ```bash
+   source .venv_pyspark/bin/activate
+   ```
+
+2. Run unit tests:
+   ```bash
+   pytest tests
+   ```
+
+#### Windows
+
+1. Activate the virtual environment with installed `pyspark` and `pytest` packages:
+   ```powershell
+   .\.venv_pyspark\Scripts\Activate.ps1
+   ```
+
+2. Run unit tests:
+   ```powershell
+   pytest tests
+   ```
+
+#### Configure Unit Tests in VS Code
+
+Alternatively, you can configure unit tests in Visual Studio Code:
+
+1. Install the `Python extension for Visual Studio Code` from VS Code Extensions.
+2. Navigate to the **Testing** tab in VS Code.
+3. Configure unit tests:
+   - Select `Pytest` as the testing framework
+   - Select `tests` folder as the unit tests folder
+4. Unit tests should now be visible in the Testing window.
+
+
+
+### Databricks CLI, Set-Up and Bundle Commands
 
 1. Install the Databricks CLI
    ```bash
