@@ -14,6 +14,7 @@ Primary repository URL with Wiki owned by course instructor: https://github.com/
   - [Java Setup for Local PySpark Development](#java-setup-for-local-pyspark-development)
   - [Unit Tests with Pytest](#unit-tests-with-pytest)
   - [Databricks CLI, Set-Up and Bundle Commands](#databricks-cli-set-up-and-bundle-commands)
+- [CI-CD Setup](#ci-cd-setup)
 
 ## Project structure
 
