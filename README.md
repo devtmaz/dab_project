@@ -19,19 +19,21 @@ Primary repository URL with Wiki owned by course instructor: https://github.com/
 
 ```
 dab_project/
-├── demos/                    Demo scripts and YAML configurations demonstrating core concepts
-├── docs/                     Project documentation (diagrams, data models)
-├── src/                      Python source code and utilities
-├── resources/                Resource configurations (jobs, pipelines)
-├── tests/                    Unit tests for shared Python code
-├── fixtures/                 Test data sets
-├── notebooks/                Notebooks for testing project setup
-├── citibike_etl/             ETL workflows and scripts
-├── build/                    Built project artifacts
-├── databricks.yml            Databricks Asset Bundle configuration
-├── requirements-dbc.txt      Databricks Connect dependencies
-├── requirements-pyspark.txt  PySpark dependencies
-└── README.md                 Project documentation
+├── .github/
+│   └── workflows/              GitHub Actions CI/CD workflows
+├── demos/                      Demo scripts and YAML configurations demonstrating core concepts
+├── docs/                       Project documentation (diagrams, data models)
+├── src/                        Python source code and utilities
+├── resources/                  Resource configurations (jobs, pipelines)
+├── tests/                      Unit tests for shared Python code
+├── fixtures/                   Test data sets
+├── notebooks/                  Notebooks for testing project setup
+├── citibike_etl/               ETL workflows and scripts
+├── databricks.yml              Databricks Asset Bundle configuration
+├── setup.py                    Python packaging configuration for wheel distribution
+├── requirements-dbc.txt        Databricks Connect dependencies
+├── requirements-pyspark.txt    PySpark dependencies
+└── README.md                   Project documentation
 ```
 
 
@@ -265,3 +267,7 @@ Alternatively, you can configure unit tests in Visual Studio Code:
    for this project, and for CI/CD configuration, see
    https://docs.databricks.com/dev-tools/bundles/index.html.
 
+
+## CI-CD Setup
+
+Refer to [Worflows README](.github/workflows/README.md) for more details about CI-CD setup for this project
